@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>1_Servlet</display-name>
+  <welcome-file-list> <!-- 애플리케이션 실행 시 자동으로 보여줄 파일 지정, 시작 페이지 설정 -->
+    <welcome-file>index.html</welcome-file> <!-- index.html이 없으면 밑이 -->
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- servlet매핑 -->
+  <servlet>
+  	<servlet-name>test1</servlet-name> <!-- 배포 명(짝궁 증표) -->
+  	<servlet-class>com.kh.servlet.TestServlet1</servlet-class> <!-- 서블릿 클래스 풀네임 -->
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>test1</servlet-name> <!-- 위의 servlet-name과 배포 명이 같아야 매핑이 됨 -->
+  	<url-pattern>/testServlet1.do</url-pattern> <!-- root빼고 저만큼만 -->
+  </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>test2</servlet-name> 
+  	<servlet-class>com.kh.servlet.TestServlet2</servlet-class> 
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>test2</servlet-name>
+  	<url-pattern>/testServlet2.do</url-pattern> 
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>test3</servlet-name> 
+  	<servlet-class>com.kh.servlet.TestServlet3</servlet-class> 
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>test3</servlet-name>
+  	<url-pattern>/testServlet3.do</url-pattern> 
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>test4</servlet-name> 
+  	<servlet-class>com.kh.servlet.TestServlet4</servlet-class> 
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>test4</servlet-name>
+  	<url-pattern>/testServlet4.do</url-pattern> 
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>practice</servlet-name> 
+  	<servlet-class>com.kh.servlet.PracticeServlet</servlet-class> 
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>practice</servlet-name>
+  	<url-pattern>/practiceServlet.do</url-pattern> 
+  </servlet-mapping>
+</web-app>
