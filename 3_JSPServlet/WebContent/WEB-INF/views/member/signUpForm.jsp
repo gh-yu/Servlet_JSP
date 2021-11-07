@@ -101,6 +101,10 @@
 		document.getElementById('idCheck').onclick = function(){ // 아이디 중복 확인
 			window.open('checkIdForm.me', 'idCheckForm', 'width=400, height=200');
 		}
+		
+		document.getElementById('nickCheck').onclick = function(){ // 닉네임 중복 확인
+			
+		}
 	
 	</script>
 </body>

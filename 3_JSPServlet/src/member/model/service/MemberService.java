@@ -6,6 +6,7 @@ import static common.JDBCTemplate.commit;
 import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.HashMap;
 
 import member.model.dao.MemberDAO;
 import member.model.vo.Member;
@@ -27,7 +28,7 @@ public class MemberService {
 	public int insertMember(Member member) {
 		Connection conn = getConnection();
 		
-		int result = mDAO.insultMember(conn, member);
+		int result = mDAO.insertMember(conn, member);
 		
 		if (result > 0) {
 			commit(conn);
@@ -44,6 +45,63 @@ public class MemberService {
 		Connection conn = getConnection();
 		
 		int result = mDAO.checkId(conn, inputId);
+		
+		close(conn);
+		
+		return result;
+	}
+
+	public Member selectMember(String userId) {
+		Connection conn = getConnection();
+		
+		Member member = mDAO.selectMember(conn, userId);
+		
+		close(conn);
+		
+		return member;
+	}
+
+	public int updateMember(Member newInfo) {
+		Connection conn = getConnection();
+		
+		int result = mDAO.updateMember(conn, newInfo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+	public int updatePwd(HashMap<String, String> map) {
+		Connection conn = getConnection();
+	
+		int result = mDAO.updatePwd(conn, map);
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+	public int deleteMember(String userId) {
+		Connection conn = getConnection();
+		
+		int result = mDAO.deleteMember(conn, userId);
+		
+		if(result > 0) {
+			commit(conn);
+		} else{
+			rollback(conn);
+		}
 		
 		close(conn);
 		
