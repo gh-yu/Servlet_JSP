@@ -122,7 +122,7 @@
 				check = document.getElementsByName('myInterest');
 				for(var i in splitStr){
 					if (check[i].value == splitStr[i]){
-						check[i].checked="checked";
+						check[i].checked="true";
 					}
 				}
 			}

@@ -39,13 +39,14 @@ public class NoticeUpdateFormServlet extends HttpServlet {
 		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
 		
 		String date = request.getParameter("date");
+		
 		Date noticeDate = null;
-		if(date == "") {
+		if(date.equals("")) {
 			noticeDate = new Date(new GregorianCalendar().getTimeInMillis());
 		} else {
 			String[] dateSplit = date.split("-");
 			int year = Integer.parseInt(dateSplit[0]);
-			int month =  Integer.parseInt(dateSplit[1] + 1);
+			int month =  Integer.parseInt(dateSplit[1]) - 1;
 			int day = Integer.parseInt(dateSplit[2]);
 			noticeDate = new Date(new GregorianCalendar(year, month, day).getTimeInMillis());
 		}

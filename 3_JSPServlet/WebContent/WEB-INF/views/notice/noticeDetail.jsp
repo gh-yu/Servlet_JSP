@@ -39,7 +39,7 @@
 						<th>작성자</th>
 						<td>
 							<%= notice.getNickname() %>
-							<input type="hidden" name="nickMame" value="<%= notice.getNickname() %>"> 
+							<input type="hidden" name="nickName" value="<%= notice.getNickname() %>"> 
 						</td>
 						<th>작성일</th>
 						<td>
@@ -65,12 +65,19 @@
  				<%-- String 비교는 ==가 아닌 equals로 비교! java코드이기 때문 --%>
 				<% if (loginUser != null && loginUser.getUserId().equals(notice.getNoticeWriter())) { %> 				
 					<input type="submit" id="updateNoBtn" value="수정하기">
-					<input type="button" id="deleteNoBtn"onclick="location.href='<%=request.getContextPath()%>/delete.no?no=' + <%= notice.getNoticeNo() %>" value="삭제하기">
+					<input type="button" id="deleteNoBtn"onclick="deleteNotice();" value="삭제하기">
 				<% } %> <!-- 로그인하지 않았거나, 게시글 작성자와 로그인한 user의 아이디가 같지 않으면  위의 수정하기 버튼 안 보임-->
 					<input type="button" onclick="location.href='javascript:history.go(-1);'" id="cancelBtn" value="뒤로 가기">
 				</div>
 				</form>
 		</div>
 	</div>
+	<script>
+		function deleteNotice() {
+			if (confirm("삭제하시겠습니까?")) {
+				location.href = '<%= request.getContextPath() %>/delete.no?no=' + "<%=notice.getNoticeNo()%>";
+			}
+		}
+	</script>
 </body>
 </html>

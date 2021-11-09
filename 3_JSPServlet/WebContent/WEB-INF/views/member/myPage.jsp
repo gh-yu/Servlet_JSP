@@ -87,7 +87,7 @@
 				<input id="updateBtn" type="submit" value="수정하기">
 				<input id="updatePwdBtn" type="button" value="비밀번호 변경 하기" onclick="location.href='updatePwdForm.me'">
 				<input id="deleteBtn" type="button" value="탈퇴하기" onclick="deleteMember();">
-				<input type="button" id="goMain" onclick="goMain();" value="메인으로">
+				<input type="button" id="goMain" onclick="location.href = '<%= request.getContextPath() %>'" value="메인으로">
 			</div>
 		</form>
 	</div>
@@ -98,7 +98,7 @@
 			// 실제로 DB에서 삭제하지 않고, status를 'N'으로 변경해 해당 아이디 사용 못하게 만듦
 			var bool = confirm('정말 탈퇴하시겠습니까?');
 			if (bool){
-				location.href='<%= request.getContextPath() %>/delete.me';
+				location.href = '<%= request.getContextPath() %>/delete.me';
 			}
 			
 		}

@@ -35,7 +35,8 @@
 					<tr>
 						<th>작성자</th>
 						<td>
-							<%= notice.getNickname() %>> 
+							<%= notice.getNickname() %>
+							<input type="hidden" name="nickName" value="<%= notice.getNickname() %>"> 
 						</td>
 						<th>작성일</th>			
 						<td>
