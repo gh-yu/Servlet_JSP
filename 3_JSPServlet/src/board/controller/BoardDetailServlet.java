@@ -32,8 +32,9 @@ public class BoardDetailServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		int bId = Integer.parseInt(request.getParameter("bId"));
+		String upd = request.getParameter("upd"); // 수정 후 상세페이지 이동을 위해 이 서블릿으로 넘어올때 url의 쿼리스트링에 "&upd=Y"를 붙이기 때문에 getParameter로 가져옴
 		
-		Board board = new BoardService().selectBoard(bId);
+		Board board = new BoardService().selectBoard(bId, upd); // upd도 넘겨서 upd가 Y일때는 조회수 증가 안 시키도록 할 것
 		
 		String page = null;
 		if(board != null) {

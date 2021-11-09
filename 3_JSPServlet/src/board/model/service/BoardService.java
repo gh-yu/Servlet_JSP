@@ -51,19 +51,19 @@ public class BoardService {
 		return result;
 	}
 	
-	public Board selectBoard(int bId) {
+	public Board selectBoard(int bId, String upd) {
 		Connection conn = getConnection();
 		
-		int result = bDAO.updateCount(conn, bId);
+		int result = 0;
+		if (!(upd != null && upd.equals("Y"))) { // upd가 쿼리스트링에 없으면 조회수 업데이트
+			result = bDAO.updateCount(conn, bId);
+		}
 		
-		Board b = null;
-		if(result > 0) {
-			b = bDAO.selectBoard(conn, bId);
-			if (b != null) {
+		Board b = bDAO.selectBoard(conn, bId); 
+		if(result > 0 && b != null) { // 조회수 증가를 시켰을 때만 commit (조회수 증가 update문 이용하기 때문)
 				commit(conn);
-			} else {
+		} else {
 				rollback(conn);
-			}
 		}
 		
 		close(conn);
