@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import board.model.vo.Attachment;
 import board.model.vo.Board;
 import board.model.vo.PageInfo;
 
@@ -102,7 +103,7 @@ public class BoardDAO {
 	public int insertBoard(Connection conn, Board board) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-
+		
 		String query = prop.getProperty("insertBoard");
 
 		try {
@@ -114,7 +115,8 @@ public class BoardDAO {
 			pstmt.setString(5, board.getBoardWriter());
 
 			result = pstmt.executeUpdate();
-
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -223,6 +225,107 @@ public class BoardDAO {
 			close(pstmt);
 		}
 		
+		
+		return result;
+	}
+
+	public ArrayList selecBList(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> list = null;
+		
+		String query = prop.getProperty("selectBList");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			list = new ArrayList<Board>();
+			while(rset.next()) {
+				Board b = new Board(rset.getInt("board_id"), 
+						  rset.getInt("board_type"),
+						  rset.getString("cate_name"),
+						  rset.getString("board_title"),
+						  rset.getString("board_content"),
+						  rset.getString("board_writer"),
+						  rset.getString("nickname"),
+						  rset.getInt("board_count"),
+						  rset.getDate("create_date"),
+						  rset.getDate("modify_date"),
+						  rset.getString("status")); 
+				
+				list.add(b);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return list;
+	}
+
+	public ArrayList selectFList(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<Attachment> list = null;
+		
+		String query = prop.getProperty("selectFList");
+		// selectFList=SELECT * FROM ATTACHMENT WHERE STATUS = 'Y' AND FILE_LEVEL = 0 
+		// FILE_LEVEL = 0 썸네일인 것만 가져옴(list이기 때문)
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			list = new ArrayList<Attachment>();
+			
+			while (rset.next()) {
+				Attachment a = new Attachment();
+				a.setBoardId(rset.getInt("board_id"));
+				a.setChangeName(rset.getString("change_name"));
+				
+				list.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return list;
+	}
+
+	public int insertAttachment(Connection conn, ArrayList<Attachment> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0; 
+		
+		String query = prop.getProperty("insertAttachment");
+		try {
+			pstmt = conn.prepareStatement(query);
+
+			for (int i = 0; i < fileList.size(); i++) {
+				
+				pstmt.setString(1, fileList.get(i).getOriginName());
+				pstmt.setString(2, fileList.get(i).getChangeName());
+				pstmt.setString(3, fileList.get(i).getFilePath());
+				pstmt.setInt(4, fileList.get(i).getFileLevel());
+				
+//				result = pstmt.executeUpdate();
+//				if (result == 0) { // 하나라도 파일 DB저장 실패시 for문 빠져나가서 return result(0)
+//					break;
+//				}
+				
+				result += pstmt.executeUpdate();				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		
 		return result;
 	}

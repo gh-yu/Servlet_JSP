@@ -21,6 +21,18 @@
 	#goMain {background: #B2CCFF; color: white;}
 </style>
 <title>Insert title here</title>
+	
+	<script>
+		function deleteMember(){
+			// 정말 삭제할거냐고 물어본 후, 삭제하겠다고 하면 delete.me로 요청
+			// 실제로 DB에서 삭제하지 않고, status를 'N'으로 변경해 해당 아이디 사용 못하게 만듦
+			var bool = confirm('정말 탈퇴하시겠습니까?');
+			if (bool){
+				location.href = '<%= request.getContextPath() %>/delete.me';
+			}
+			
+		}
+	</script>
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp" %>

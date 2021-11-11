@@ -54,7 +54,7 @@ public class UpdateMemberServlet extends HttpServlet {
 			// 회원 정보 조회시 세션에 저장된 정보 불려오려면 회원 정보 수정시 세션 영역은 바뀌지 않기 때문에
 			// 정보 수정 후 DB에 저장된 정보 불러와서 세션에 있는 정보도 update필요
 			Member loginUser = new MemberService().selectMember(myId); 
-			request.getSession().setAttribute("loginUser", loginUser);;
+			request.getSession().setAttribute("loginUser", loginUser);
 			response.sendRedirect("myPage.me"); // 마이페이지로 이동, /myPage.me로 하면 context root에 있는 파일 /는 빼기 
 			
 		} else {

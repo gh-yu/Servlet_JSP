@@ -82,18 +82,18 @@
 		</div>
 	</div>
 	<script>
- 		function deleteBoard(){
+<%--  		function deleteBoard(){
 			if(confirm('정말로 삭제하시겠습니까?')) {
 				location.href='<%= request.getContextPath() %>/delete.bo?bId=<%= b.getBoardId() %>';
 			}
-		}
+		} --%>
 		
-/* 		function deleteBoard(){
+ 		function deleteBoard(){
 			if(confirm('정말로 삭제하시겠습니까?')) {
 				$('#detailForm').attr('action', 'delete.bo'); // form태그의 action 속성값을 바꿈
 				$('#detailForm').submit(); // form에 대한 submit() -> 제출 
 			}
-		} */
+		} 
 	</script>
 </body>
 </html>

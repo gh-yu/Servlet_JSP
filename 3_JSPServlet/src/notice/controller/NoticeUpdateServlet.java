@@ -51,7 +51,6 @@ public class NoticeUpdateServlet extends HttpServlet {
 			int month =  Integer.parseInt(dateSplit[1]) - 1;
 			int day = Integer.parseInt(dateSplit[2]);
 			noticeDate = new Date(new GregorianCalendar(year, month, day).getTimeInMillis());
-			//System.out.println(year); Date생성하면서 DB에 이상하게 저장됨 2038년 이렇게 -> 해결 필요
 		}
 	
 		Notice notice = new Notice(no, title, content, null, nickName, 0, noticeDate, null);
