@@ -14,6 +14,7 @@ import java.util.Properties;
 import board.model.vo.Attachment;
 import board.model.vo.Board;
 import board.model.vo.PageInfo;
+import board.model.vo.Reply;
 
 import static common.JDBCTemplate.close;
 
@@ -234,7 +235,7 @@ public class BoardDAO {
 		ResultSet rset = null;
 		ArrayList<Board> list = null;
 		
-		String query = prop.getProperty("selectBList");
+		String query = prop.getProperty("selectBTList");
 		
 		try {
 			stmt = conn.createStatement();
@@ -321,6 +322,107 @@ public class BoardDAO {
 				
 				result += pstmt.executeUpdate();				
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public ArrayList<Attachment> selectTumbnail(int bId, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Attachment> list = null;
+		
+		String query = prop.getProperty("selectAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bId);
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Attachment>();
+			while (rset.next()) {
+//				list.add(new Attachment(rset.getInt("file_id"), 
+//										rset.getInt("board_id"),
+//										rset.getString("origin_name"),
+//										rset.getString("change_name"),
+//										rset.getString("file_path"),
+//										rset.getDate("upload_date"),
+//										rset.getInt("file_level"),
+//										0, rset.getString("status")
+//										));
+				
+				Attachment a = new Attachment(); // Attachment객체 생성해서 필요한 것만 setter로 값 할당하기
+				a.setFileId(rset.getInt("file_id"));
+				a.setOriginName(rset.getString("origin_name"));
+				a.setChangeName(rset.getString("change_name"));
+				a.setFilePath(rset.getString("file_path"));
+				a.setUploadDate(rset.getDate("upload_date"));
+				a.setFileLevel(rset.getInt("file_level")); // 여기서 file_level 가져오지 않아도 첫번째 사진이 썸네일이기 때문에 굳이 하지 않아도 됨
+				
+				list.add(a);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<Reply> selectReplyList(Connection conn, int bId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Reply> list = null;
+		
+		String query = prop.getProperty("selectReplyList");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bId);
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Reply>();
+			while(rset.next()) {
+				list.add(new Reply(rset.getInt("REPLY_ID"), 
+								   rset.getString("REPLY_CONTENT"), 
+								   rset.getInt("REF_BID"), 
+								   rset.getString("REPLY_WRITER"), 
+								   rset.getString("NICKNAME"), 
+								   rset.getDate("CREATE_DATE"), 
+								   rset.getDate("MODIFY_DATE"),
+								   rset.getString("status")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+
+	public int insertReply(Connection conn, Reply r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertReply");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, r.getReplyContent());
+			pstmt.setInt(2, r.getRefBId());
+			pstmt.setString(3, r.getReplyWriter());
+		
+			result = pstmt.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -12,6 +12,7 @@ import board.model.dao.BoardDAO;
 import board.model.vo.Attachment;
 import board.model.vo.Board;
 import board.model.vo.PageInfo;
+import board.model.vo.Reply;
 
 public class BoardService {
 
@@ -137,6 +138,49 @@ public class BoardService {
 		
 		
 		return result1 + result2;
+	}
+
+	
+	public ArrayList<Attachment> selectThumnail(int bId) {
+		Connection conn = getConnection();
+		
+		ArrayList<Attachment> list = bDAO.selectTumbnail(bId, conn);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	public ArrayList<Reply> selectReplyList(int bId) {
+		Connection conn = getConnection();
+		
+		ArrayList<Reply> list = bDAO.selectReplyList(conn, bId);
+
+		close(conn);
+		return list;
+	}
+
+	public ArrayList<Reply> insertReply(Reply r) {
+		Connection conn = getConnection();
+		
+		int result = bDAO.insertReply(conn, r);
+		
+		ArrayList<Reply> list = null; 
+		if (result > 0) {
+			list = bDAO.selectReplyList(conn, r.getRefBId()); // insert한 결과가 성공이면 댓글리스트 select해옴
+			
+			if (list != null) {
+				commit(conn); // list가 있으면 커밋 아니면 롤백
+			} else {
+				rollback(conn);
+			} 
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return list;
 	}
 
 

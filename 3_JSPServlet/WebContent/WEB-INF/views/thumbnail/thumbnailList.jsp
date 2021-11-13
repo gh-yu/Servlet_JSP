@@ -56,5 +56,14 @@
 			<% } %>
 		</div>
 	</div>
+	
+	<script>
+		$('.thumb-list').click(function(){
+			var bId = $(this).children().children().eq(0).val();
+			location.href = "<%= request.getContextPath() %>/detail.th?bId=" + bId;
+		});
+		
+	</script>
+	
 </body>
 </html>

@@ -29,7 +29,7 @@ public class BoardUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
+//		request.setCharacterEncoding("utf-8");
 		int bId = Integer.parseInt(request.getParameter("bid"));
 		int cateId = Integer.parseInt(request.getParameter("category")); // String으로 저장해서 Board객체에 정보들 저장해서 넘긴 후 DAO에서 parseInt해도 됨
 		String title = request.getParameter("title");

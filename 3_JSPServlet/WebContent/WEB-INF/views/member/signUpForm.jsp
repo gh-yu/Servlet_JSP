@@ -10,7 +10,7 @@
 			width: 48%; height: 450px; background-color: rgba(255, 255, 255, 0.4); border: 5px solid white;
 			margin-left: auto; margin-right: auto; margin-top: 5%;
 		}
-		#idCheck, #nickCheck{border-radius: 15px; color: white; background: #FFD8D8;}
+		#idCheck, #nickCheck, #emailCheck{border-radius: 15px; color: white; background: #FFD8D8;}
 		#joinForm td {text-align: right;}
 		#joinForm tr:nth-child(1) > td:nth-child(3),
 			#joinForm tr:nth-child(5) > td:nth-child(3){text-align: left;}
@@ -27,12 +27,13 @@
 		<br>
 		<h2 align="center">회원가입</h2>
 		
-		<form action="<%= request.getContextPath() %>/insert.me" method="post" id="joinForm" name="joinForm">
+		<form action="<%= request.getContextPath() %>/insert.me" method="post" id="joinForm" name="joinForm" onsubmit="return insertValidate();">
 			<table>
 				<tr>
 					<td width="200px"><label class="must">*</label> 아이디</td>
-					<td><input type="text" maxlength="13" name="joinUserId" required></td>
-					<td width="200px"><input type="button" id="idCheck" value="중복확인"></td>
+					<td><input type="text" maxlength="13" name="joinUserId" id="joinUserId" required></td>
+					<!-- <td width="200px"><input type="button" id="idCheck" value="중복확인"></td> -->
+					<td width="200px"><label id="idResult"></label><td> <!-- ajax json방식으로 중복체크 결과값 바로 보여줌 -->
 				</tr>
 				<tr>
 					<td><label class="must">*</label> 비밀번호</td>
@@ -60,8 +61,8 @@
 				</tr>
 				<tr>
 					<td>이메일</td>
-					<td><input type="email" name="email"></td>
-					<td></td>
+					<td><input type="email" name="email" id="email"></td>
+					<td><input type="button" id="emailCheck" name="emailCheck" value="이메일 확인"></td>
 				</tr>
 				<tr>
 					<td>주소</td>
@@ -98,13 +99,76 @@
 	</div>
 	
 	<script>
-		document.getElementById('idCheck').onclick = function(){ // 아이디 중복 확인
-			window.open('checkIdForm.me', 'idCheckForm', 'width=400, height=200');
-		}
+//		document.getElementById('idCheck').onclick = function(){ // 아이디 중복 확인
+//			window.open('checkIdForm.me', 'idCheckForm', 'width=400, height=200');
+//		}
 		
-		document.getElementById('nickCheck').onclick = function(){ // 닉네임 중복 확인
+//		document.getElementById('nickCheck').onclick = function(){ // 닉네임 중복 확인
+//			
+//		}
+		
+		// ajax방식으로 변경
+		var isUsable = false;		// id 사용 가능 여부
+		var isIdChecked = false;	// id 체크 여부
+		$('#joinUserId').on('change paste keyup', function(){ // 아이디 입력사항이 변경, 붙여넣기, 키업 이벤트가  발생햇을 경우 
+			isIdChecked = false;							  // idIdChecked = false로 초기화
+		});
+		
+		$('#joinUserId').change(function(){
+			var userId = $('#joinUserId');
+			
+			if (!userId || userId.val().length < 4){
+				alert('아이디는 최소 4자리 이상이어야 합니다.');
+				userId.focus();
+			} else {
+				$.ajax({
+					url: 'checkId.me',
+					data: {inputId:userId.val()},
+					success: function(data){
+						console.log(data);
+						
+						if (data.trim() == '0') { // int로 보냈지만 string으로 넘어옴, data == '0'했을때 잘 안 먹힘, trim()을 붙여주니 잘 먹힘 -> 어딘가에 띄어쓰기가 들어가있을 수도 있기 때문
+							$('#idResult').text('사용 가능합니다.');
+							$('#idResult').css({'color':'green', 'float':'left', 'display':'inline-block'});
+							isUsable = true;
+							isIdChacked = true;
+						} else {
+							$('#idResult').text('사용 불가능합니다.');
+							$('#idResult').css({'color':'red', 'float':'left', 'display':'inline-block'});
+							isUsable = false;
+							isIdChacked = false;
+							userId.focus();
+						}
+					},
+					error: function(data){
+						console.log(data);
+					}
+				});
+			}
+		});
+		
+		function insertValidate(){
+			if(isUsable && isIdChecked) {
+				return true;
+			} else {
+				alert('아이디 중복을 확인해주세요.');
+				return false;
+			}
 			
 		}
+		
+		$('#emailCheck').on('click', function(){ // 이메일 인증하는 함수, ajax로 안하고 form태그 변경해서 해도 됨
+			$.ajax({
+				url: 'confirmMail.me',
+				data: {email:$('#email').val()}, // 이메일 입력한 곳의 value값을 가져옴
+				success: function(data){
+					console.log(data);
+				},
+				error: function(data){
+					console.log(data);
+				}
+			});
+		});
 	
 	</script>
 </body>

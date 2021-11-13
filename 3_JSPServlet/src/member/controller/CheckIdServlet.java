@@ -1,6 +1,8 @@
 package member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,10 +33,17 @@ public class CheckIdServlet extends HttpServlet {
 		
 		int result = new MemberService().checkId(inputId);
 		
-		request.setAttribute("result", result);
-		request.setAttribute("checkedId", inputId); // 중복검사 누르기 전 입력했던 값 날아가지 않게 저장해둠
+//		request.setAttribute("result", result);
+//		request.setAttribute("checkedId", inputId); // 중복검사 누르기 전 입력했던 값 날아가지 않게 저장해둠
+//		
+//		request.getRequestDispatcher("WEB-INF/views/member/checkIdForm.jsp").forward(request, response); // 불렀던 곳으로 다시 돌아가기
 		
-		request.getRequestDispatcher("WEB-INF/views/member/checkIdForm.jsp").forward(request, response); // 불렀던 곳으로 다시 돌아가기
+		// ajax방식
+		// response.setContentType("application/json; charset=UTF-8"); // 객체로 보내는게 아니라 int를 보낼 것이기 때문애 json 안 써도 됨
+		PrintWriter out = response.getWriter(); 
+		out.println(result);
+		out.flush();
+		out.close();
 	}
 
 	/**
