@@ -106,8 +106,8 @@
 						<td width="200px"><%= list.get(i).getModifyDate() %></td>
 					</tr>
 					<% } %>
-				</table>
 				<% } %>
+				</table>
 			</div>
 		</div>
 		

@@ -41,7 +41,7 @@
 					<th width="100px">조회수</th>
 					<th width="150px">작성일</th>
 				</tr>
-				<% if (list.isEmpty()) { %>
+ 				<% if (list.isEmpty()) { %>
 				<tr>
 					<td colspan="6">조회된 리스트가 없습니다.</td>
 				</tr>
@@ -56,7 +56,7 @@
 					<td><%= b.getCreateDate() %></td>
 				</tr>	
 				<% 		} %>
-				<% } %>
+				<% } %> 
 			</table>
 		</div>
 		

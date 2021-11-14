@@ -111,7 +111,7 @@
 		var isUsable = false;		// id 사용 가능 여부
 		var isIdChecked = false;	// id 체크 여부
 		$('#joinUserId').on('change paste keyup', function(){ // 아이디 입력사항이 변경, 붙여넣기, 키업 이벤트가  발생햇을 경우 
-			isIdChecked = false;							  // idIdChecked = false로 초기화
+			isIdChecked = false;
 		});
 		
 		$('#joinUserId').change(function(){
@@ -131,12 +131,12 @@
 							$('#idResult').text('사용 가능합니다.');
 							$('#idResult').css({'color':'green', 'float':'left', 'display':'inline-block'});
 							isUsable = true;
-							isIdChacked = true;
+							isIdChecked = true;
 						} else {
 							$('#idResult').text('사용 불가능합니다.');
 							$('#idResult').css({'color':'red', 'float':'left', 'display':'inline-block'});
 							isUsable = false;
-							isIdChacked = false;
+							isIdChecked = false;
 							userId.focus();
 						}
 					},
@@ -150,14 +150,14 @@
 		function insertValidate(){
 			if(isUsable && isIdChecked) {
 				return true;
+				console.log(isIdChecked);
 			} else {
 				alert('아이디 중복을 확인해주세요.');
 				return false;
 			}
-			
 		}
 		
-		$('#emailCheck').on('click', function(){ // 이메일 인증하는 함수, ajax로 안하고 form태그 변경해서 해도 됨
+ 		$('#emailCheck').on('click', function(){ // 이메일 인증하는 함수, ajax로 안하고 form태그 변경해서 해도 됨
 			$.ajax({
 				url: 'confirmMail.me',
 				data: {email:$('#email').val()}, // 이메일 입력한 곳의 value값을 가져옴
