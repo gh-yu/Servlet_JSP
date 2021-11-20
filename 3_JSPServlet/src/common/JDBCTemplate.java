@@ -11,12 +11,12 @@ import java.sql.Statement;
 import java.util.Properties;
 
 public class JDBCTemplate {
-	private static Connection conn = null;
 	
 	private JDBCTemplate() {} // 객체 생성하지 않기 위해 private
 
 	public static Connection getConnection() {
 		Connection conn = null; 
+		
 		Properties prop = new Properties();
 		
 		String fileName = JDBCTemplate.class.getResource("/sql/driver.properties").getPath(); 

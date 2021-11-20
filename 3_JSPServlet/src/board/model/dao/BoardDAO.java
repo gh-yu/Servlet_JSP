@@ -126,6 +126,7 @@ public class BoardDAO {
 
 		return result;
 	}
+	
 
 	public int updateCount(Connection conn, int bId) {
 		PreparedStatement pstmt = null;
@@ -431,5 +432,4 @@ public class BoardDAO {
 		
 		return result;
 	}
-
 }

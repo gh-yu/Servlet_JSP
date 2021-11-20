@@ -150,7 +150,6 @@
 		function insertValidate(){
 			if(isUsable && isIdChecked) {
 				return true;
-				console.log(isIdChecked);
 			} else {
 				alert('아이디 중복을 확인해주세요.');
 				return false;

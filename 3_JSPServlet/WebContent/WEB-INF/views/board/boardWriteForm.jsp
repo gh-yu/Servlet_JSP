@@ -37,7 +37,7 @@
 								<option value="60">요리</option>
 								<option value="70">기타</option>
 							</select>
-						</td>	
+						</td>
 					</tr>
 					<tr>
 						<th>제목</th>

@@ -50,7 +50,7 @@ public class InsertNoticeServlet extends HttpServlet {
 			int year = Integer.parseInt(splitDate[0]);
 			int month = Integer.parseInt(splitDate[1]) - 1;
 			int day = Integer.parseInt(splitDate[2]);
-		
+			
 			noticeDate = new Date(new GregorianCalendar(year, month, day).getTimeInMillis());
 		}
 		
