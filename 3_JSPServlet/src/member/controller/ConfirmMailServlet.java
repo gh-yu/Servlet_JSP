@@ -41,9 +41,9 @@ public class ConfirmMailServlet extends HttpServlet {
 		String title = "[JSP/Servlet] 유효 메일 확인";
 		String content = "본 메일은 현재 고객님의 메일이 유효한지 확인하기 위한 메일입니다."; // 태그를 추가하여 보낼 수 있다. 꾸미기 가능
 		// 이메일 인증 코드같은 건 추가하고 싶으면 추가
-		String host="smtp.naver.com"; // 사용하는 메일을 적음 (gmail 등)
-		String sender = "____@naver.com"; // 실제 보내는 사람의 유효한 메일
-		String senderPwd = "____"; // 그 메일의 실제 비밀번호
+		String host="smtp.gmail.com"; // 사용하는 메일을 적음 (gmail 등)
+		String sender = "hobbyist1125@gmail.com"; // 실제 보내는 사람의 유효한 메일
+		String senderPwd = "hobbyist!hobby122"; // 그 메일의 실제 비밀번호
 		
 		//Properties prop = new Properties();
 //		prop.setProperty("mail.stmp.host", host);
@@ -55,8 +55,12 @@ public class ConfirmMailServlet extends HttpServlet {
 		// SMTP 서버 정보 설정
 		Properties props = new Properties();
 		props.put("mail.smtp.host", host);
-		props.put("mail.smtp.port", 587);
+		//props.put("mail.smtp.port", 587);
+		props.put("mail.smtp.port", 465);
 		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.ssl.enable", "true"); 
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
 		// 이렇게 포트번호를 587로 직접 설정해주니 된다. 네이버는 587이고 구글은 465로 설정하면 된다
 		
 		Session session = Session.getDefaultInstance(props, new Authenticator() {
@@ -101,3 +105,7 @@ public class ConfirmMailServlet extends HttpServlet {
 	}
 
 }
+
+
+
+

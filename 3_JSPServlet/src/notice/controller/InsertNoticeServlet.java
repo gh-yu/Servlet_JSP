@@ -3,7 +3,6 @@ package notice.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
