@@ -42,8 +42,8 @@ public class ConfirmMailServlet extends HttpServlet {
 		String content = "본 메일은 현재 고객님의 메일이 유효한지 확인하기 위한 메일입니다."; // 태그를 추가하여 보낼 수 있다. 꾸미기 가능
 		// 이메일 인증 코드같은 건 추가하고 싶으면 추가
 		String host="smtp.gmail.com"; // 사용하는 메일을 적음 (gmail 등)
-		String sender = "hobbyist1125@gmail.com"; // 실제 보내는 사람의 유효한 메일
-		String senderPwd = "hobbyist!hobby122"; // 그 메일의 실제 비밀번호
+		String sender = ""; // 실제 보내는 사람의 유효한 메일
+		String senderPwd = ""; // 그 메일의 실제 비밀번호
 		
 		//Properties prop = new Properties();
 //		prop.setProperty("mail.stmp.host", host);
